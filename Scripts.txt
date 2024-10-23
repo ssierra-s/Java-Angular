@@ -1,0 +1,9 @@
+Escriba un SQL que permita obtener información de los estudiantes que pertenezcan al
+último grado (Grado 11).:
+
+SELECT * FROM institucion.estudiantes WHERE grado_actual = 11;
+
+Escriba un SQL que permita obtener información de los estudiantes que tengan la edad de
+15 a 17 años.:
+
+SELECT * FROM institucion.estudiantes WHERE edad BETWEEN 15 AND 17;

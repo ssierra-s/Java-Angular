@@ -1,0 +1,98 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Manrope:wght@200..800&family=Oswald:wght@200..700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css">                                         
+
+<div style="padding: 2rem;">
+    <h2>Gestión de Estudiantes</h2>
+    <!-- Contenedor para el botón "Nuevo Estudiante" -->
+<div style="margin-bottom: 1rem;">
+    <button pButton type="button" label="Nuevo Estudiante" icon="pi pi-plus" (click)="openNew()"></button>
+</div>
+
+<!-- Contenedor para los filtros -->
+<div style="display: flex; gap: 1rem; align-items: center;">
+    <button pButton label="Filtrar por Grado 11" (click)="filtrarPorGrado11()"></button>
+    <button pButton label="Filtrar por Edad (15-17 años)" (click)="filtrarPorEdad()"></button>
+    <button pButton label="Mostrar todos" (click)="getEstudiantes()"></button>
+    <input type="text" [(ngModel)]="numeroDocumentoFiltro" placeholder="Número de Documento" style="width: 200px;"/>
+    <button pButton label="Filtrar por Número de Documento" (click)="filtrarPorNumeroDocumento()"></button>
+</div>
+
+    <p-table [value]="estudiantes" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Número de Identidad</th>
+                <th>Tipo de Documento</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Edad</th>
+                <th>Grado Actual</th>
+                <th>Email</th>
+                <th>Teléfono Fijo</th>
+                <th>Celular</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-estudiante>
+            <tr>
+                <td>{{ estudiante.numeroIdentidad }}</td>
+                <td>{{ estudiante.tipoDocumento }}</td>
+                <td>{{ estudiante.nombres }}</td>
+                <td>{{ estudiante.apellidos }}</td>
+                <td>{{ estudiante.fechaNacimiento | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ estudiante.edad }}</td>
+                <td>{{ estudiante.gradoActual }}</td>
+                <td>{{ estudiante.email }}</td>
+                <td>{{ estudiante.telefonoFijo }}</td>
+                <td>{{ estudiante.celular }}</td>
+                <td>
+                    <button pButton icon="pi pi-pencil" (click)="editEstudiante(estudiante)"></button>
+                    <button pButton icon="pi pi-trash" (click)="deleteEstudiante(estudiante.numeroIdentidad)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+  
+    <p-dialog header="Estudiante" [(visible)]="studentDialog" [modal]="true" [style]="{ width: '500px' }" (hide)="hideDialog()">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <label for="nombres">Nombres</label>
+            <input id="nombres" type="text" [(ngModel)]="estudiante.nombres" pInputText />
+    
+            <label for="apellidos">Apellidos</label>
+            <input id="apellidos" type="text" [(ngModel)]="estudiante.apellidos" pInputText />
+    
+            <label for="edad">Edad</label>
+            <input id="edad" type="number" [(ngModel)]="estudiante.edad" pInputText />
+    
+            <label for="gradoActual">Grado Actual</label>
+            <input id="gradoActual" type="number" [(ngModel)]="estudiante.gradoActual" pInputText />
+    
+            <label for="numeroIdentidad">Número de Identidad</label>
+            <input id="numeroIdentidad" type="text" [(ngModel)]="estudiante.numeroIdentidad" pInputText />
+    
+            <label for="tipoDocumento">Tipo de Documento</label>
+            <input id="tipoDocumento" type="text" [(ngModel)]="estudiante.tipoDocumento" pInputText />
+    
+            <label for="fechaNacimiento">Fecha de Nacimiento</label>
+            <input id="fechaNacimiento" type="date" [(ngModel)]="estudiante.fechaNacimiento" pInputText />
+    
+            <label for="email">Email</label>
+            <input id="email" type="email" [(ngModel)]="estudiante.email" pInputText />
+    
+            <label for="telefonoFijo">Teléfono Fijo</label>
+            <input id="telefonoFijo" type="text" [(ngModel)]="estudiante.telefonoFijo" pInputText />
+    
+            <label for="celular">Celular</label>
+            <input id="celular" type="text" [(ngModel)]="estudiante.celular" pInputText />
+    
+            <p-footer>
+                <button pButton label="Guardar" icon="pi pi-check" (click)="saveEstudiante()"></button>
+                <button pButton label="Cancelar" icon="pi pi-times" (click)="hideDialog()"></button>
+            </p-footer>
+        </div>
+    </p-dialog>
+    
+</div>
